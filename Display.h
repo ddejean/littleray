@@ -14,6 +14,7 @@ class Display {
                 ~Display(void);
                 void writePixel(int x, int y, Pixel *pixel);
                 void refresh(void);
+                void waitForQuit(void);
 };
 
 #endif

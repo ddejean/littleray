@@ -27,6 +27,7 @@ void SceneFactory::loadObjects(Scene *s, TiXmlNode *n)
 Scene *SceneFactory::makeScene(const std::string &sceneFile)
 {
 	int width, height;
+	const char* title;
 	TiXmlNode *root = NULL;
 	TiXmlElement *elt = NULL;
 	std::string nodeValue;
@@ -48,7 +49,8 @@ Scene *SceneFactory::makeScene(const std::string &sceneFile)
 	/* Parse scene configuration */
 	elt->QueryIntAttribute("width", &width);
 	elt->QueryIntAttribute("height", &height);
-	s = new Scene(width, height);
+	title = elt->Attribute("title");
+	s = new Scene(width, height, title);
 
 	/* For each kind of child, use the appropriate factory */
 	for (TiXmlNode *node = root->FirstChild();

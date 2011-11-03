@@ -3,21 +3,6 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
-O_SRCS += \
-../Display.o \
-../Light.o \
-../Material.o \
-../MaterialFactory.o \
-../ObjectFactory.o \
-../Pixel.o \
-../Point.o \
-../Ray.o \
-../Scene.o \
-../SceneFactory.o \
-../Sphere.o \
-../SphereFactory.o \
-../Vector.o 
-
 CPP_SRCS += \
 ../Display.cpp \
 ../Light.cpp \
@@ -74,7 +59,7 @@ CPP_DEPS += \
 %.o: ../%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	g++ -O2 -g -Wall -Werror -c -fmessage-length=0 -Wextra -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

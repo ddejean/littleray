@@ -12,17 +12,18 @@ class Scene {
         public:
                 int width;
                 int height;
+                std::string title;
                 std::vector<Object*> objects;
                 std::vector<Material*> materials;
                 std::vector<Light*> lights;
-                
-                Scene(int width, int height);
+
+                Scene(int w, int h, std::string t);
                 void addObject(Object *o);
                 void addLight(Light *l);
                 void addMaterial(Material *m);
-		void render(Display *display);
+                void render(Display *display);
         private:
-		Pixel renderPixel(int x, int y);
+                Pixel renderPixel(int x, int y);
 };
 
 #endif

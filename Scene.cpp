@@ -10,10 +10,11 @@
 #include "Material.h"
 #include "Sphere.h"
 
-Scene::Scene(int width, int height)
+Scene::Scene(int w, int h, std::string t)
 {
-	this->width = width;
-	this->height = height;
+	this->width = w;
+	this->height = h;
+	this->title = t;
 }
 
 void Scene::addObject(Object *o)

@@ -27,8 +27,7 @@ int main(int argc, char **argv)
         /* Rendu de l'image */
         scene->render(display);
         display->refresh();
-
-        SDL_Delay(10000);
+        display->waitForQuit();
 
         /* Libération de mémoire */
         delete display;
