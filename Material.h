@@ -6,6 +6,9 @@
 #include "Ray.h"
 #include "Light.h"
 
+/*
+ * Default material class, with simple Lambert behavior.
+ */
 class Material {
 public:
 	double red;
@@ -15,16 +18,17 @@ public:
 
 	Material(void);
 	Material(double r, double g, double b, double refl);
+	virtual ~Material(void) {};
 
 	/*
 	 * Apply light contribution from material, light and view ray to
-	 * pixel using the material light properties.
+	 * pixel using the Lambert property.
 	 */
-	void lightContribution(Pixel &in,
-						   Ray &viewRay,
-						   Light &light,
-						   Ray &lightRay,
-						   Vector &normal);
+	virtual void lightContribution(Pixel &in,
+						   	   	   Ray &viewRay,
+						   	   	   Light &light,
+						   	   	   Ray &lightRay,
+						   	   	   Vector &normal);
 
 	friend std::istream &operator>>(std::istream &inputFile, Material &m);
 };

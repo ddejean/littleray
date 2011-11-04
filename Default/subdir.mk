@@ -10,6 +10,7 @@ CPP_SRCS += \
 ../Material.cpp \
 ../MaterialFactory.cpp \
 ../ObjectFactory.cpp \
+../PhongMaterial.cpp \
 ../Pixel.cpp \
 ../Point.cpp \
 ../Ray.cpp \
@@ -27,6 +28,7 @@ OBJS += \
 ./Material.o \
 ./MaterialFactory.o \
 ./ObjectFactory.o \
+./PhongMaterial.o \
 ./Pixel.o \
 ./Point.o \
 ./Ray.o \
@@ -44,6 +46,7 @@ CPP_DEPS += \
 ./Material.d \
 ./MaterialFactory.d \
 ./ObjectFactory.d \
+./PhongMaterial.d \
 ./Pixel.d \
 ./Point.d \
 ./Ray.d \
