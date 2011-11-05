@@ -25,4 +25,7 @@ C_UPPER_DEPS :=
 SUBDIRS := \
 xml \
 . \
+Objects \
+Materials \
+Factories \
 

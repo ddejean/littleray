@@ -10,6 +10,9 @@ RM := rm
 -include sources.mk
 -include subdir.mk
 -include xml/subdir.mk
+-include Objects/subdir.mk
+-include Materials/subdir.mk
+-include Factories/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
