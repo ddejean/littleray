@@ -14,8 +14,6 @@ PhongMaterial::PhongMaterial(double r,
 {
 }
 
-PhongMaterial::~PhongMaterial() {}
-
 void PhongMaterial::lightContribution(Pixel &in,
 					   	   	     	  Ray &viewRay,
 					   	   	     	  Light &light,
@@ -32,7 +30,7 @@ void PhongMaterial::lightContribution(Pixel &in,
 		reflect = 2.0f * (lightRay.dir * normal);
 		phongDir = lightRay.dir - (normal * reflect);
 		phongTerm = fmax(phongDir * viewRay.dir, 0.0f) ;
-		phongTerm = this->specularValue * powf(phongTerm, this->specularPower); //TODO don't forget the coeff;
+		phongTerm = this->specularValue * std::pow(phongTerm, this->specularPower); //TODO don't forget the coef;
 		in.red += phongTerm * light.red;
 		in.green += phongTerm * light.green;
 		in.blue += phongTerm * light.blue;

@@ -21,7 +21,7 @@ public:
 				  double refl,
 				  double specValue,
 				  double specPower);
-	virtual ~PhongMaterial() = 0;
+	virtual ~PhongMaterial() {};
 
 	/*
 	 * Apply light contribution from material, light and view ray to
