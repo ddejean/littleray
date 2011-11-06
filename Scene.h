@@ -23,7 +23,7 @@ class Scene {
                 void addMaterial(Material *m);
                 void render(Display *display);
         private:
-                Pixel renderPixel(int x, int y);
+                Pixel renderPixel(double x, double y);
 };
 
 #endif

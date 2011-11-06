@@ -35,89 +35,97 @@ void Scene::addMaterial(Material *m)
 	this->materials.push_back(m);
 }
 
-Pixel Scene::renderPixel(int x, int y)
+Pixel Scene::renderPixel(double x, double y)
 {
 	Pixel pixel;
-        int level = 0;
-        Point start(double(x), double(y), -10000.0f);
-        Vector v(0.0f, 0.0f, 1.0f);
-        Vector n;
-        Ray viewRay(start, v, 1.0f);
+	int level = 0;
+	Point start(x, y, -10000.0f);
+	Vector v(0.0f, 0.0f, 1.0f);
+	Vector n;
+	Ray viewRay(start, v, 1.0f);
 
-        do {
-                double t = 20000.0f;
-                Object *cObject = NULL;
-                Material *m = NULL;
+	do {
+		double t = 20000.0f;
+		Object *cObject = NULL;
+		Material *m = NULL;
 
-                /* Intersections avec les spheres */
-                for (unsigned int i = 0; i < this->objects.size(); ++i) {
-                        if (this->objects[i]->hit(viewRay, t)) {
-                                cObject = this->objects[i];
-                                // Avoir une référence sur un material
-                		m = cObject->material;
-                        }
-                }
+		/* Find a meeting point with the objects */
+		for (unsigned int i = 0; i < this->objects.size(); ++i) {
+			if (this->objects[i]->hit(viewRay, t)) {
+				cObject = this->objects[i];
+				m = cObject->material;
+			}
+		}
 
-                if (cObject == NULL) break;
+		if (cObject == NULL) break;
 
-                /* Calculer le nouveau point de départ */
-                start = viewRay.origin + (viewRay.dir * t);
-                /* Calculer la normale au point d'intersection */
-                n = cObject->normal(viewRay, t);
-                if (n.isNull()) break;
+		/* New start point */
+		start = viewRay.origin + (viewRay.dir * t);
+		/* Compute the normal vector at intersection point */
+		n = cObject->normal(viewRay, t);
+		if (n.isNull()) break;
 
-                /* Calculer la valeur d'éclarage au point */
-                for (unsigned int i = 0; i < this->lights.size(); i++) { // Et les itérateurs ?
-                	Light *cLight = this->lights[i];
-                	Vector distance = cLight->position - start;
-                	Ray lightRay;
-                	double norm;
+		/* Light contribution at this point */
+		for (unsigned int i = 0; i < this->lights.size(); i++) {
+			Light *cLight = this->lights[i];
+			Vector distance = cLight->position - start;
+			Ray lightRay;
+			double norm;
 
-                	/* Calcul du rayon de lumière */
-                	norm = distance.norm();
-                	if (n * distance <= 0.0f || norm <= 0.0f) continue;
-                	lightRay.origin = start;
-                	lightRay.dir = distance * (1.0f / norm);
-                	lightRay.lightness = 1.0f;
+			/* Compute the ray from the light source*/
+			norm = distance.norm();
+			if (n * distance <= 0.0f || norm <= 0.0f) continue;
+			lightRay.origin = start;
+			lightRay.dir = distance * (1.0f / norm);
+			lightRay.lightness = 1.0f;
 
-                	/* Vérifier que la sphere n'est pas dans l'ombre*/
-                	bool hidden = false;
-                	for (unsigned int j = 0; j < this->objects.size(); j++) {
-                		Object *o = this->objects[j];
-                		if (o->hit(lightRay, norm)) {
-                			hidden = true;
-                			break;
-                		}
-                	}
+			/* Check the object is not hidden by another */
+			bool hidden = false;
+			for (unsigned int j = 0; j < this->objects.size(); j++) {
+				Object *o = this->objects[j];
+				if (o->hit(lightRay, norm)) {
+					hidden = true;
+					break;
+				}
+			}
 
-                	/* Si elle est eclairée, calculer la luminosité */
-                	if (!hidden) {
-                		m->lightContribution(pixel, viewRay, *cLight, lightRay, n);
-                	}
-                }
+			/* Compute light if needed */
+			if (!hidden) {
+				m->lightContribution(pixel, viewRay, *cLight, lightRay, n);
+			}
+		}
 
-                /* Atténuer la lumière d'autant que nécessaire */
-                viewRay.lightness *= m->reflection;
-                /* Préparer la prochaine reflexion */
-                // TODO: ajouter une méthode d'application de l'atténuation au materiaux, ainsi il prend un rayon entrée et le modifie.
-                double reflet = 2.0f * (viewRay.dir * n);
-                viewRay.origin = start;
-                viewRay.dir = viewRay.dir - (n * reflet);
+		/* Decrease the light due to absorption  */
+		viewRay.lightness *= m->reflection;
+		/* Prepare the next ray travel */
+		// TODO: ajouter une méthode d'application de l'atténuation au materiaux, ainsi il prend un rayon entrée et le modifie.
+		double reflet = 2.0f * (viewRay.dir * n);
+		viewRay.origin = start;
+		viewRay.dir = viewRay.dir - (n * reflet);
 
-                level++;
-        } while (viewRay.isStillVisible() && level < 10);
+		level++;
+	} while (viewRay.isStillVisible() && level < 10);
 
 	return pixel;
 }
 
 void Scene::render(Display *display)
 {
-	Pixel p;
+	for (int y = 0; y < this->height; y++) {
+		for (int x = 0; x < this->width; x++) {
 
-        for (int y = 0; y < this->height; y++) {
-                for (int x = 0; x < this->width; x++) {
-                	p = this->renderPixel(x, y);
-                	display->writePixel(x, y, &p);
-               }
-        }
+			Pixel p(0.0, 0.0, 0.0);
+			Pixel parcel(0.0, 0.0, 0.0);
+			for (double deltay = (double)y - 0.5; deltay < (double)y + 0.5; deltay += 0.5) {
+				for (double deltax = (double)x - 0.5; deltax < (double)x + 0.5; deltax += 0.5) {
+					parcel = this->renderPixel(deltax, deltay);
+					p.blue += 0.25 * parcel.blue;
+					p.red += 0.25 * parcel.red;
+					p.green += 0.25 * parcel.green;
+				}
+			}
+			display->writePixel(x, y, &p);
+
+		}
+	}
 }

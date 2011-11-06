@@ -13,7 +13,7 @@ int main(int argc, char **argv)
         SceneFactory *sceneFactory;
         Scene *scene;
 
-        /* Allouer la scene et l'affichage */
+        /* Create the scene and the screen */
         if (argc != 2) { 
                 std::cout << "Error in program parameters." << std::endl;
                 return EXIT_FAILURE;
@@ -24,12 +24,12 @@ int main(int argc, char **argv)
                 delete sceneFactory;
         }
 
-        /* Rendu de l'image */
+        /* Render the picture */
         scene->render(display);
         display->refresh();
         display->waitForQuit();
 
-        /* Libération de mémoire */
+        /* Free memory */
         delete display;
         delete scene;
 
