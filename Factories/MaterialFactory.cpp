@@ -1,7 +1,8 @@
 #include <stdexcept>
-#include "PhongMaterial.h"
-#include "MaterialFactory.h"
 #include "Material.h"
+#include "PhongMaterial.h"
+#include "BlinnPhongMaterial.h"
+#include "MaterialFactory.h"
 #include "xml/tinyxml.h"
 
 Material *MaterialFactory::makeMaterial(TiXmlNode *n)
@@ -54,6 +55,15 @@ Material *MaterialFactory::makeMaterial(TiXmlNode *n)
 		delete effect;
 		return (Material*) new PhongMaterial(red, green, blue, reflection, specularValue, specularPower);
 
+	}
+	else if (effect->compare("blinn-phong") == 0) {
+		double specularValue, specularPower;
+
+		elt->QueryDoubleAttribute("specular-value", &specularValue);
+		elt->QueryDoubleAttribute("specular-power", &specularPower);
+
+		delete effect;
+		return (Material*) new BlinnPhongMaterial(red, green, blue, reflection, specularValue, specularPower);
 	}
 
 	std::cout << "Invalid material effect detected." << std::endl;

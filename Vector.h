@@ -6,24 +6,24 @@
 #include <fstream>
 
 class Vector {
-        
-        private:
-                double x;
-                double y;
-                double z;
-        public:
-                Vector(void);
-                Vector(double x, double y, double z);
-		double getX(void);
-		double getY(void);
-		double getZ(void);
-		bool isNull(void);
-		double norm(void);
-                Vector operator+(Vector &v);
-                Vector operator-(Vector v);
-                double operator*(Vector &v);
-                Vector operator*(double c);
-                friend std::istream &operator>>(std::istream &inputFile, Vector &v);
+private:
+	double x;
+	double y;
+	double z;
+
+public:
+	Vector(void);
+	Vector(double x, double y, double z);
+	double getX(void);
+	double getY(void);
+	double getZ(void);
+	bool isNull(void);
+	double norm(void);
+	Vector operator+(Vector &v);
+	Vector operator-(Vector v);
+	double operator*(Vector &v);
+	Vector operator*(double c);
+	friend std::istream &operator>>(std::istream &inputFile, Vector &v);
 
 };
 
