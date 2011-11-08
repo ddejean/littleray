@@ -15,8 +15,9 @@ class Sphere : public Object {
                 Point center;
                 double radius;
 
-                /* CTORS */
+                /* TORS */
                 Sphere(Material *m, double x, double y, double z, double r);
+                virtual ~Sphere(void) {};
 
                 /* Methods */
                 bool hit(Ray &r, double &t);

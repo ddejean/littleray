@@ -8,6 +8,8 @@ class SceneFactory
 {
 private:
 	void loadObjects(Scene *s, TiXmlNode *n);
+	Antialiaser* findAntialiaser(TiXmlElement *e);
+
 public:
 	/* Build a Scene from a scene file */
 	Scene *makeScene(const std::string &sceneFile);

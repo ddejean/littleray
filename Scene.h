@@ -7,6 +7,7 @@
 #include "Light.h"
 #include "Display.h"
 #include "Pixel.h"
+#include "Antialiaser.h"
 
 class Scene {
         public:
@@ -16,8 +17,9 @@ class Scene {
                 std::vector<Object*> objects;
                 std::vector<Material*> materials;
                 std::vector<Light*> lights;
+                Antialiaser *antialiaser;
 
-                Scene(int w, int h, std::string t);
+                Scene(int w, int h, std::string t, Antialiaser *al);
                 void addObject(Object *o);
                 void addLight(Light *l);
                 void addMaterial(Material *m);

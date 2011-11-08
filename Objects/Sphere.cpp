@@ -18,8 +18,8 @@ bool Sphere::hit(Ray &r, double &t)
         double delta = B*B - dist * dist + this->radius * this->radius; 
         if (delta < 0.0f) 
                 return false; 
-        double t0 = B - sqrtf(delta);
-        double t1 = B + sqrtf(delta);
+        double t0 = B - std::sqrt(delta);
+        double t1 = B + std::sqrt(delta);
 
         if ((t0 > 0.1f) && (t0 < t)) {
                 t = t0;

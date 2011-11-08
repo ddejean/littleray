@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdexcept>
+#include "Supersampler4x.h"
 #include "SceneFactory.h"
 #include "MaterialFactory.h"
 #include "ObjectFactory.h"
@@ -15,13 +16,19 @@ void SceneFactory::loadObjects(Scene *s, TiXmlNode *n)
 			node != NULL;
 			node = node->NextSibling())
 	{
-                ObjectFactory oF;
+		ObjectFactory oF;
 		Object *o;
 
-                o = oF.makeObject(s, node);
-                assert(o != NULL);
-                s->addObject(o);
+		o = oF.makeObject(s, node);
+		assert(o != NULL);
+		s->addObject(o);
 	}
+}
+
+Antialiaser* SceneFactory::findAntialiaser(TiXmlElement *e)
+{
+	(void)e;
+	return new Supersampler4x();
 }
 
 Scene *SceneFactory::makeScene(const std::string &sceneFile)
@@ -50,7 +57,7 @@ Scene *SceneFactory::makeScene(const std::string &sceneFile)
 	elt->QueryIntAttribute("width", &width);
 	elt->QueryIntAttribute("height", &height);
 	title = elt->Attribute("title");
-	s = new Scene(width, height, title);
+	s = new Scene(width, height, title, findAntialiaser(elt));
 
 	/* For each kind of child, use the appropriate factory */
 	for (TiXmlNode *node = root->FirstChild();

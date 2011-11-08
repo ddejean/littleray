@@ -10,11 +10,12 @@
 #include "Material.h"
 #include "Sphere.h"
 
-Scene::Scene(int w, int h, std::string t)
+Scene::Scene(int w, int h, std::string t, Antialiaser *al)
 {
 	this->width = w;
 	this->height = h;
 	this->title = t;
+	this->antialiaser = al;
 }
 
 void Scene::addObject(Object *o)
@@ -116,16 +117,24 @@ void Scene::render(Display *display)
 
 			Pixel p(0.0, 0.0, 0.0);
 			Pixel parcel(0.0, 0.0, 0.0);
-			for (double deltay = (double)y - 0.5; deltay < (double)y + 0.5; deltay += 0.5) {
-				for (double deltax = (double)x - 0.5; deltax < (double)x + 0.5; deltax += 0.5) {
+			double begin = this->antialiaser->begin();
+			double end = this->antialiaser->end();
+
+			for (double deltay = (double)y + begin; deltay < (double)y + end; deltay += this->antialiaser->stepY()) {
+				for (double deltax = (double)x + begin; deltax < (double)x + end; deltax += this->antialiaser->stepX()) {
+
+					/* For each supplementary pixel, contribute to the final one
+					 * with a position-dependant coefficient.
+					 */
+					double contribution = this->antialiaser->contribution();
 					parcel = this->renderPixel(deltax, deltay);
-					p.blue += 0.25 * parcel.blue;
-					p.red += 0.25 * parcel.red;
-					p.green += 0.25 * parcel.green;
+					p.blue += contribution * parcel.blue;
+					p.red += contribution * parcel.red;
+					p.green += contribution * parcel.green;
 				}
 			}
-			display->writePixel(x, y, &p);
 
+			display->writePixel(x, y, &p);
 		}
 	}
 }

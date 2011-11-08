@@ -2,7 +2,7 @@
 # Littleray build suite #
 #########################
 
-DIRS=. ./Factories ./Materials ./Objects ./Antialiaser ./xml
+DIRS=. ./Antialiaser ./Factories ./Materials ./Objects ./xml
 FILES=$(wildcard $(addsuffix /*.cpp, $(DIRS)))
 OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(notdir $(FILES))))
 INCLUDES=$(addprefix -I, $(DIRS))

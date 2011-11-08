@@ -9,15 +9,16 @@
 class Object
 {
 public:
-        Material *material;
+	Material *material;
 
-        Object(Material *m) {
-                assert(m != NULL);
-                material = m;
-        }
+	Object(Material *m) {
+		assert(m != NULL);
+		material = m;
+	}
+	virtual ~Object(void) {};
 
 	virtual bool hit(Ray &r, double &t) = 0;
-        virtual Vector normal(Ray &r, double t) = 0;
+	virtual Vector normal(Ray &r, double t) = 0;
 };
 
 #endif /* OBJECT_H_ */
