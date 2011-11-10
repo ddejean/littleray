@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdexcept>
 #include "Supersampler4x.h"
+#include "Supersampler16x.h"
 #include "SceneFactory.h"
 #include "MaterialFactory.h"
 #include "ObjectFactory.h"
@@ -27,8 +28,26 @@ void SceneFactory::loadObjects(Scene *s, TiXmlNode *n)
 
 Antialiaser* SceneFactory::findAntialiaser(TiXmlElement *e)
 {
-	(void)e;
-	return new Supersampler4x();
+	const char* sampler;
+
+
+	sampler = e->Attribute("antialiaser");
+
+	if (sampler == 0)
+		return new Supersampler4x();
+
+	{
+		std::string s(sampler);
+		if (s.compare("16x") == 0)
+			return new Supersampler16x();
+		else if (s.compare("16x") == 0)
+			return new Supersampler4x();
+		else
+			return new Supersampler4x();
+	}
+	/* Never happens */
+	throw std::runtime_error("Bug in antialiaser chooser !");
+	return 0;
 }
 
 Scene *SceneFactory::makeScene(const std::string &sceneFile)
