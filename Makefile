@@ -12,12 +12,14 @@ CC=g++
 CFLAGS=-O2 -Wall -Wextra -Werror
 LDFLAGS=-lm -lSDL
 
+QUIET_CC=@echo -e "\tCC\t $@"; $(CC)
+
 vpath %.cpp $(DIRS)
 
-all: raytracer
+all: build/raytracer
 
 build:
-	@echo "Creating build directory"
+	@echo "Creating build directory."
 	@mkdir build
 
 build/%.d: %.cpp build
@@ -27,13 +29,14 @@ build/%.d: %.cpp build
 -include $(DEPS)
 
 build/%.o: %.cpp
-	$(CC) -c $< -o $@ $(INCLUDES)
+	$(QUIET_CC) -c $< -o $@ $(INCLUDES)
 
-raytracer: $(OBJS)
-	$(CC) -o build/raytracer $(OBJS) $(LDFLAGS)
+build/raytracer: $(OBJS)
+	$(QUIET_CC) -o build/raytracer $(OBJS) $(LDFLAGS)
 
 clean:
-	rm -rf build/
+	@echo "Cleaning build directory."
+	@rm -rf build/
 	
 
 .PHONY: clean
