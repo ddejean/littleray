@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <stdexcept>
-#include "Supersampler4x.h"
-#include "Supersampler16x.h"
+#include "AntialiaserFactory.h"
 #include "SceneFactory.h"
 #include "MaterialFactory.h"
 #include "ObjectFactory.h"
@@ -26,28 +25,10 @@ void SceneFactory::loadObjects(Scene *s, TiXmlNode *n)
 	}
 }
 
-Antialiaser* SceneFactory::findAntialiaser(TiXmlElement *e)
+Antialiaser* SceneFactory::findAntialiaser(TiXmlNode *root)
 {
-	const char* sampler;
-
-
-	sampler = e->Attribute("antialiaser");
-
-	if (sampler == 0)
-		return new Supersampler4x();
-
-	{
-		std::string s(sampler);
-		if (s.compare("16x") == 0)
-			return new Supersampler16x();
-		else if (s.compare("16x") == 0)
-			return new Supersampler4x();
-		else
-			return new Supersampler4x();
-	}
-	/* Never happens */
-	throw std::runtime_error("Bug in antialiaser chooser !");
-	return 0;
+	AntialiaserFactory aF;
+	return aF.makeAntialiaser(root);
 }
 
 Scene *SceneFactory::makeScene(const std::string &sceneFile)
@@ -76,7 +57,7 @@ Scene *SceneFactory::makeScene(const std::string &sceneFile)
 	elt->QueryIntAttribute("width", &width);
 	elt->QueryIntAttribute("height", &height);
 	title = elt->Attribute("title");
-	s = new Scene(width, height, title, findAntialiaser(elt));
+	s = new Scene(width, height, title, findAntialiaser(root));
 
 	/* For each kind of child, use the appropriate factory */
 	for (TiXmlNode *node = root->FirstChild();
