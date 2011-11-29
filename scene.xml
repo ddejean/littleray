@@ -1,8 +1,17 @@
 <?xml version="1.0" ?>
 <scene width="640" height="480" title="3 spheres" antialiaser="4x">
-	<material red="1.0" green="1.0" blue="0.0" reflection="0.5" effect="blinn-phong" specular-value="1.0" specular-power="60"/>
-	<material red="0.0" green="1.0" blue="1.0" reflection="0.5" effect="blinn-phong" specular-value="1.0" specular-power="60"/>
-	<material red="1.0" green="0.0" blue="1.0" reflection="0.5" effect="blinn-phong" specular-value="1.0" specular-power="60"/>
+	<material reflection="0.5">
+	       <diffuse type="lambert" red="1.0" green="1.0" blue="0.0" />
+	       <specular type="blinn" red="1.0" green="1.0" blue="0.0" power="60" />
+	</material>
+	<material reflection="0.5">
+               <diffuse type="lambert" red="0.0" green="1.0" blue="1.0"  />
+               <specular type="blinn" red="0.0" green="1.0" blue="1.0" power="60" />
+        </material>
+	<material reflection="0.5">
+               <diffuse type="lambert" red="1.0" green="0.0" blue="1.0"  />
+               <specular type="blinn" red="1.0" green="0.0" blue="1.0" power="60" />
+        </material>
 	
 	<light red="1.0" green="1.0" blue="1.0" x="0.0" y="240.0" z="-100.0"/>
 	<light red="0.6" green="0.7" blue="1.0" x="640.0" y="240.0" z="-10000.0"/>

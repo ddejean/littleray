@@ -5,20 +5,19 @@
 #include "Pixel.h"
 #include "Ray.h"
 #include "Light.h"
+#include "MaterialProperty.h"
 
 /*
  * Default material class, with simple Lambert behavior.
  */
 class Material {
 public:
-	double red;
-	double green;
-	double blue;
+	MaterialProperty *diffuse;
+	MaterialProperty *specular;
 	double reflection;
 
-	Material(void);
-	Material(double r, double g, double b, double refl);
-	virtual ~Material(void) {};
+	Material(MaterialProperty *diffuse, MaterialProperty *specular, double refl);
+	virtual ~Material(void);;
 
 	/*
 	 * Apply light contribution from material, light and view ray to
@@ -29,8 +28,6 @@ public:
 						   	   	   Light &light,
 						   	   	   Ray &lightRay,
 						   	   	   Vector &normal);
-
-	friend std::istream &operator>>(std::istream &inputFile, Material &m);
 };
 
 #endif

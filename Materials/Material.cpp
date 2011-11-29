@@ -1,20 +1,23 @@
+#include <stdexcept>
+#include <assert.h>
 #include "Material.h"
 #include "Vector.h"
 
-Material::Material(void)
+Material::Material(MaterialProperty *diff, MaterialProperty *spec, double refl):
+	specular(spec),
+	reflection(refl)
 {
-        this->red = 0.0f;
-        this->green = 0.0f;
-        this->blue = 0.0f;
-        this->reflection = 0.0f;
+	if (diff == 0)
+		throw std::runtime_error("The diffuse property of a material must be defined or the material will be invisible !");
+	this->diffuse = diff;
 }
 
-Material::Material(double r, double g, double b, double refl)
+Material::~Material(void)
 {
-        this->red = r;
-        this->green = g;
-        this->blue = b;
-        this->reflection = refl;
+	if (this->diffuse != 0)
+		delete this->diffuse;
+	if (this->specular != 0)
+		delete this->specular;
 }
 
 void Material::lightContribution(Pixel &in,
@@ -23,15 +26,14 @@ void Material::lightContribution(Pixel &in,
 					   	   	     Ray &lightRay,
 					   	   	     Vector &normal)
 {
-		double lambert;
+	/* Apply diffuse surface effect */
+	assert(this->diffuse != 0);
+	this->diffuse->apply(in, viewRay, light, lightRay, normal);
 
-		lambert = (lightRay.dir * normal) * viewRay.lightness;
-		in.red += lambert * light.red * this->red;
-		in.green += lambert * light.green * this->green;
-		in.blue += lambert * light.blue * this->blue;
+	/* Apply specular effect if exists */
+	if (this->specular != 0) {
+		this->specular->apply(in, viewRay, light, lightRay, normal);
+	}
 }
-std::istream &operator>>(std::istream &inputFile, Material &m)
-{
-        return inputFile >> m.red >> m.green >> m.blue >> m.reflection;
-}
+
 
