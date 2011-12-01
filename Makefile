@@ -9,15 +9,21 @@ INCLUDES=$(addprefix -I, $(DIRS))
 DEPS=$(patsubst %.o,%.d,$(OBJS))
 
 CC=g++
-CFLAGS=-O2 -Wall -Wextra -Werror
+CFLAGS=-Wall -Wextra -Werror
+OPT_CFLAGS=-O2
 LDFLAGS=-lm -lSDL
 
 QUIET_CC=@echo -e "\tCC\t $@"; $(CC)
 
 vpath %.cpp $(DIRS)
 
-all: build/littleray
+all: opt
 
+# Optimized build configuration
+opt: CFLAGS+=$(OPT_CFLAGS)
+opt: build/littleray
+
+# Coverage build
 coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
 coverage: LDFLAGS+=-lgcov
 coverage: build/littleray
