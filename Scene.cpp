@@ -18,6 +18,13 @@ Scene::Scene(int w, int h, std::string t, Antialiaser *al)
 	this->antialiaser = al;
 }
 
+Scene::~Scene(void)
+{
+	this->objects.clear();
+	this->materials.clear();
+	this->lights.clear();
+}
+
 void Scene::addObject(Object *o)
 {
 	assert(o != NULL);

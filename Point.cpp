@@ -23,6 +23,3 @@ Point Point::operator+(Vector v)
 	 return p;
 }
 
-std::istream &operator>>(std::istream &inputFile, Point &p) {
-	return inputFile >> p.x >> p.y >> p.z ; 
-}

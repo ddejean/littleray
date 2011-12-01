@@ -18,6 +18,7 @@ Material::~Material(void)
 		delete this->diffuse;
 	if (this->specular != 0)
 		delete this->specular;
+	std::cout << "Sniff !" << std::endl;
 }
 
 void Material::lightContribution(Pixel &in,

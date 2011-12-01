@@ -3,7 +3,7 @@
 
 class Antialiaser {
 public:
-	virtual ~Antialiaser() = 0;
+	virtual ~Antialiaser() {};
 
 	/*
 	 * Provides the current step, and

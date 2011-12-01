@@ -17,7 +17,7 @@ public:
 	double reflection;
 
 	Material(MaterialProperty *diffuse, MaterialProperty *specular, double refl);
-	virtual ~Material(void);;
+	virtual ~Material(void);
 
 	/*
 	 * Apply light contribution from material, light and view ray to

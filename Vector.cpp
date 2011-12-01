@@ -39,12 +39,6 @@ double Vector::norm(void)
 	return std::sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
 }
 
-Vector Vector::operator+(Vector &v)
-{
-        Vector result = Vector(this->x + v.x, this->y + v.y, this->z + v.z);
-        return result;
-}
-
 Vector Vector::operator-(Vector v)
 {
         Vector result = Vector(this->x - v.x, this->y - v.y, this->z - v.z);
@@ -60,11 +54,6 @@ Vector Vector::operator*(double c)
 {
         Vector result = Vector(this->x * c, this->y * c, this->z * c);
         return result;
-}
-
-std::istream &operator>>(std::istream &inputFile, Vector &v)
-{
-        return inputFile >> v.x >> v.y >> v.z;
 }
 
 Vector operator-(const Point &p1, const Point &p2)

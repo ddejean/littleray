@@ -39,7 +39,7 @@ Vector Sphere::normal(Ray &r, double t)
         double norm;
 
         /* Point de départ avec paramètre */
-	n = r.dir * t;
+        n = r.dir * t;
         p = r.origin + n;
 
         /* Normale à l'intersection */

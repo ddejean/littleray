@@ -20,6 +20,7 @@ class Scene {
                 Antialiaser *antialiaser;
 
                 Scene(int w, int h, std::string t, Antialiaser *al);
+                ~Scene(void);
                 void addObject(Object *o);
                 void addLight(Light *l);
                 void addMaterial(Material *m);

@@ -7,9 +7,3 @@ Light::Light(Point &p, double r, double g, double b)
         this->green = g;
         this->blue = b;
 }
-
-std::istream &operator>>(std::istream &inputFile, Light &l)
-{
-        return inputFile >> l.position >> l.red >> l.green >> l.blue;
-}
-
