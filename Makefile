@@ -16,7 +16,16 @@ QUIET_CC=@echo -e "\tCC\t $@"; $(CC)
 
 vpath %.cpp $(DIRS)
 
-all: build/raytracer
+all: build/littleray
+
+coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
+coverage: LDFLAGS+=-lgcov
+coverage: build/littleray
+	lcov --directory build/ --zerocounter
+	build/littleray scene.xml
+	lcov --base-directory "`pwd`/" --directory build/ --capture --output-file build/draft.info
+	lcov -r build/draft.info "*.h" -r build/draft.info "*usr*include*" -r build/draft.info "xml/*" --output-file build/littleray.info
+	genhtml build/littleray.info --output-directory build/coverage/
 
 build:
 	@echo "Creating build directory."
@@ -29,14 +38,14 @@ build/%.d: %.cpp build
 -include $(DEPS)
 
 build/%.o: %.cpp
-	$(QUIET_CC) -c $< -o $@ $(INCLUDES)
+	$(QUIET_CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 
-build/raytracer: $(OBJS)
-	$(QUIET_CC) -o build/raytracer $(OBJS) $(LDFLAGS)
+build/littleray: $(OBJS)
+	$(QUIET_CC) -o build/littleray $(OBJS) $(LDFLAGS)
 
 clean:
 	@echo "Cleaning build directory."
 	@rm -rf build/
 	
 
-.PHONY: clean
+.PHONY: clean coverage
