@@ -20,8 +20,16 @@ Scene::Scene(int w, int h, std::string t, Antialiaser *al)
 
 Scene::~Scene(void)
 {
+	for (unsigned int i = 0; i < this->objects.size(); i++)
+		delete this->objects[i];
 	this->objects.clear();
+
+	for (unsigned int i = 0; i < this->materials.size(); i++)
+		delete this->materials[i];
 	this->materials.clear();
+
+	for (unsigned int i = 0; i < this->lights.size(); i++)
+		delete this->lights[i];
 	this->lights.clear();
 }
 
