@@ -18,7 +18,10 @@ QUIET_MKDIR=@echo -e "\tMKDIR\t $@"; mkdir
 
 vpath %.cpp $(DIRS)
 
-all: opt
+all: opt tests
+
+tests: opt
+	@make -C tests/
 
 # Optimized build configuration
 opt: CFLAGS+=$(OPT_CFLAGS)
@@ -63,6 +66,7 @@ clean:
 	@echo "Cleaning build directory."
 	@rm -rf build/
 	@make -C xml/ clean
+	@make -C tests/ clean
 	
 
 .PHONY: clean coverage
