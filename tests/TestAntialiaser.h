@@ -4,14 +4,15 @@
 #include "cxxtest/TestSuite.h"
 #include "Antialiaser/Antialiaser.h"
 
-class TestFakeAntialiaser: public CxxTest::TestSuite {
+class TestAntialiaser: public CxxTest::TestSuite {
 private:
 	Antialiaser *fake;
 public:
-	void setUp();
 	void tearDown();
 
-	void testFakeAntialiaser();
+	void testFakeAntialiaser(void);
+	void testAntialiaser4x(void);
+	void testAntialiaser16x(void);
 };
 
 #endif /* TESTFAKEANTIALIASER_H_ */
