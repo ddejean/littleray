@@ -1,6 +1,6 @@
 #include <stdexcept>
-#include "SphereFactory.h"
-#include "Sphere.h"
+#include "Objects/SphereFactory.h"
+#include "Objects/Sphere.h"
 #include "xml/tinyxml.h"
 
 Sphere *SphereFactory::makeSphere(Scene *s, TiXmlNode *n)

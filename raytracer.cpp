@@ -4,7 +4,6 @@
 #include "Vector.h"
 #include "Display.h"
 #include "Scene.h"
-#include "Ray.h"
 #include "SceneFactory.h"
 
 int main(int argc, char **argv)

@@ -2,10 +2,11 @@
 # Littleray build suite #
 #########################
 
-DIRS=. ./Antialiaser ./Materials ./Objects ./Lights
+DIRS=. ./Antialiasers ./Materials ./Objects ./Lights
 FILES=$(wildcard $(addsuffix /*.cpp, $(DIRS)))
 OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(notdir $(FILES))))
-INCLUDES=$(addprefix -I, $(DIRS))
+#INCLUDES=$(addprefix -I, $(DIRS))
+INCLUDES=-I./
 DEPS=$(patsubst %.o,%.d,$(OBJS))
 
 CC=g++

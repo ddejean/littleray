@@ -3,7 +3,7 @@
 # xml library build chain #
 ###########################
 
-DIRS=. .. ../Antialiaser ../Objects ../Materials ../Lights ../xml
+DIRS=. .. ../Antialiasers ../Objects ../Materials ../Lights ../xml
 EXCLUDES= ../raytracer.cpp ../Scene.cpp ../SceneFactory.cpp ../Display.cpp ../Factories/SceneFactory.cpp
 FILES=$(filter-out $(EXCLUDES), $(wildcard $(addsuffix /*.cpp, $(DIRS))))
 OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(notdir $(FILES))))

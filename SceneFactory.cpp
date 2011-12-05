@@ -1,10 +1,10 @@
 #include <assert.h>
 #include <stdexcept>
-#include "AntialiaserFactory.h"
+#include "Antialiasers/AntialiaserFactory.h"
 #include "SceneFactory.h"
-#include "MaterialFactory.h"
-#include "ObjectFactory.h"
-#include "LightFactory.h"
+#include "Materials/MaterialFactory.h"
+#include "Objects/ObjectFactory.h"
+#include "Lights/LightFactory.h"
 #include "xml/tinyxml.h"
 
 void SceneFactory::loadObjects(Scene *s, TiXmlNode *n)

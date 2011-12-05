@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include "Pixel.h"
-#include "Ray.h"
-#include "Light.h"
-#include "MaterialProperty.h"
+#include "Lights/Ray.h"
+#include "Lights/Light.h"
+#include "Materials/MaterialProperty.h"
 
 /*
  * Default material class, with simple Lambert behavior.

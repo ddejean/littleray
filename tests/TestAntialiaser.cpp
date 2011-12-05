@@ -1,7 +1,7 @@
 #include "TestAntialiaser.h"
-#include "Antialiaser/FakeAntialiaser.h"
-#include "Antialiaser/Supersampler4x.h"
-#include "Antialiaser/Supersampler16x.h"
+#include "Antialiasers/FakeAntialiaser.h"
+#include "Antialiasers/Supersampler4x.h"
+#include "Antialiasers/Supersampler16x.h"
 
 void TestAntialiaser::tearDown()
 {

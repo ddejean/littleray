@@ -4,11 +4,11 @@
 #include <cmath>
 #include "Scene.h"
 #include "Point.h"
-#include "Light.h"
-#include "Ray.h"
-#include "Object.h"
-#include "Material.h"
-#include "Sphere.h"
+#include "Lights/Light.h"
+#include "Lights/Ray.h"
+#include "Objects/Object.h"
+#include "Materials/Material.h"
+#include "Objects/Sphere.h"
 
 Scene::Scene(int w, int h, std::string t, Antialiaser *al)
 {

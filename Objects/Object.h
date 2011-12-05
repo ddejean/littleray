@@ -3,8 +3,8 @@
 
 #include <assert.h>
 #include "Vector.h"
-#include "Ray.h"
-#include "Material.h"
+#include "Lights/Ray.h"
+#include "Materials/Material.h"
 
 class Object
 {

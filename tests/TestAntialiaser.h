@@ -2,7 +2,7 @@
 #define TESTFAKEANTIALIASER_H_
 
 #include "cxxtest/TestSuite.h"
-#include "Antialiaser/Antialiaser.h"
+#include "Antialiasers/Antialiaser.h"
 
 class TestAntialiaser: public CxxTest::TestSuite {
 private:

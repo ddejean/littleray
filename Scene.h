@@ -2,12 +2,12 @@
 #define _SCENE_H_
 
 #include <vector>
-#include "Object.h"
-#include "Material.h"
-#include "Light.h"
+#include "Objects/Object.h"
+#include "Materials/Material.h"
+#include "Lights/Light.h"
 #include "Display.h"
 #include "Pixel.h"
-#include "Antialiaser.h"
+#include "Antialiasers/Antialiaser.h"
 
 class Scene {
         public:

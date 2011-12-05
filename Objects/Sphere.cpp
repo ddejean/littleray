@@ -1,6 +1,6 @@
-#include "Sphere.h"
-#include "Object.h"
-#include "Material.h"
+#include "Objects/Sphere.h"
+#include "Objects/Object.h"
+#include "Materials/Material.h"
 #include <cmath>
 
 Sphere::Sphere(Material *m, double x, double y, double z, double r):

@@ -2,8 +2,8 @@
 #define MATERIALPROPERTY_H_
 
 #include "Pixel.h"
-#include "Ray.h"
-#include "Light.h"
+#include "Lights/Ray.h"
+#include "Lights/Light.h"
 #include "Vector.h"
 
 class MaterialProperty {

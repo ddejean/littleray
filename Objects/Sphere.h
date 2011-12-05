@@ -5,9 +5,9 @@
 #include <fstream>
 #include "Point.h"
 #include "Vector.h"
-#include "Ray.h"
-#include "Material.h"
-#include "Object.h"
+#include "Lights/Ray.h"
+#include "Materials/Material.h"
+#include "Objects/Object.h"
 
 class Sphere : public Object {
         public:

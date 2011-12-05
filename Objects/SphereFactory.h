@@ -2,7 +2,7 @@
 #define SPHEREFACTORY_H_
 
 #include "Scene.h"
-#include "Sphere.h"
+#include "Objects/Sphere.h"
 #include "xml/tinyxml.h"
 
 class SphereFactory
