@@ -2,7 +2,7 @@
 #define MATERIALFACTORY_H_
 
 #include "Material.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class MaterialFactory
 {

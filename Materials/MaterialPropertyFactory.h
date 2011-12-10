@@ -2,7 +2,7 @@
 #define MATERIALPROPERTYFACTORY_H_
 
 #include "MaterialProperty.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class MaterialPropertyFactory {
 public:

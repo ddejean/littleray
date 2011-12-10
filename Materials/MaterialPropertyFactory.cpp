@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <stdexcept>
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 #include "MaterialPropertyFactory.h"
 #include "LambertProperty.h"
 #include "PhongProperty.h"

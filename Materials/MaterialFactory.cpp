@@ -3,7 +3,7 @@
 #include "MaterialProperty.h"
 #include "MaterialFactory.h"
 #include "MaterialPropertyFactory.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 Material *MaterialFactory::makeMaterial(TiXmlNode *n)
 {

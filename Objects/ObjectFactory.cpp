@@ -1,5 +1,5 @@
 #include <stdexcept>
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 #include "Object.h"
 #include "ObjectFactory.h"
 #include "SphereFactory.h"

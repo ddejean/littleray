@@ -2,7 +2,7 @@
 #include "Light.h"
 #include "Point.h"
 #include "LightFactory.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 Light *LightFactory::makeLight(TiXmlNode *n)
 {

@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 #include "Objects/Sphere.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class SphereFactory
 {

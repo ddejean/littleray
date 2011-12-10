@@ -2,7 +2,7 @@
 #define SCENEFACTORY_H_
 
 #include "Scene.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class SceneFactory
 {

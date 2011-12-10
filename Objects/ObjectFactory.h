@@ -3,7 +3,7 @@
 
 #include "Scene.h"
 #include "Object.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class ObjectFactory
 {

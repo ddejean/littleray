@@ -2,7 +2,7 @@
 #define ANTIALIASERFACTORY_H_
 
 #include "Antialiaser.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class AntialiaserFactory {
 public:

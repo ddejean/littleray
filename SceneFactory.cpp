@@ -5,7 +5,7 @@
 #include "Materials/MaterialFactory.h"
 #include "Objects/ObjectFactory.h"
 #include "Lights/LightFactory.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 void SceneFactory::loadObjects(Scene *s, TiXmlNode *n)
 {

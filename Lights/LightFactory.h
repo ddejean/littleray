@@ -2,7 +2,7 @@
 #define LIGHTFACTORY_H_
 
 #include "Light.h"
-#include "xml/tinyxml.h"
+#include "Xml/tinyxml.h"
 
 class LightFactory {
 public:

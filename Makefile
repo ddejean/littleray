@@ -2,72 +2,147 @@
 # Littleray build suite #
 #########################
 
-DIRS=. ./Antialiasers ./Materials ./Objects ./Lights
-FILES=$(wildcard $(addsuffix /*.cpp, $(DIRS)))
-OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(notdir $(FILES))))
-#INCLUDES=$(addprefix -I, $(DIRS))
-INCLUDES=-I./
-DEPS=$(patsubst %.o,%.d,$(OBJS))
+LIB_NAMES=Antialiasers Objects Lights Materials Xml
+LIB_DIRS=$(addprefix ./, $(LIB_NAMES))
 
+INCLUDES_DIRS=. $(LIB_NAMES)
+INCLUDES=$(addprefix -I, $(INCLUDES_DIRS))
+
+
+### Tools
 CC=g++
+AR=ar
+MKDIR=mkdir
+
+QCC=@echo -e "\tCC\t " $@; $(CC)
+QMKDIR=@echo -e "\tMKDIR\t " $@; $(MKDIR)
+QAR=@echo -e "\tAR\t " $@; $(AR)
+
+### Options
 CFLAGS=-Wall -Wextra -Werror
-OPT_CFLAGS=-O2
-LDFLAGS=-lm -lSDL -Lbuild/lib -lxml
+OPTFLAGS=-O2
+LDFLAGS=-lSDL -Lbuild/ $(addprefix -l, $(LIB_NAMES))
+ARFLAGS=-cq
 
-QUIET_CC=@echo -e "\tCC\t $@"; $(CC)
-QUIET_MKDIR=@echo -e "\tMKDIR\t $@"; mkdir
 
-vpath %.cpp $(DIRS)
+# Main targets
+all: littleray
+	@echo $(LDFLAGS) 
 
-all: opt tests
 
-tests: opt
-	@make -C tests/
+#######################################
+##### Dependency files management #####
+#######################################
 
-# Optimized build configuration
-opt: CFLAGS+=$(OPT_CFLAGS)
-opt: xml build/littleray
-
-# Coverage build
-coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
-coverage: LDFLAGS+=-lgcov
-coverage: xml build/littleray
-	lcov --directory build/ --zerocounter
-	build/littleray scene.xml
-	lcov --base-directory "`pwd`/" --directory build/ --capture --output-file build/draft.info
-	lcov -r build/draft.info "*.h" -r build/draft.info "*usr*include*" -r build/draft.info "xml/*" --output-file build/littleray.info
-	genhtml build/littleray.info --output-directory build/coverage/
-
-# Build libraries
-xml: build build/lib
-	make -C xml/
-	@echo -e "\tCP\t xml/build/libxml.a build/lib/"; cp xml/build/libxml.a build/lib/
-
-# Build directories
-build:
-	@echo "Creating build directory."
-	$(QUIET_MKDIR) $@
-
-build/lib: build
-	$(QUIET_MKDIR) -p $@
+DEPS_WILDCARD=*.cpp  $(addsuffix /*.cpp, $(LIB_NAMES))
+DEPS_CPP=$(wildcard $(DEPS_WILDCARD))
+DEPS=$(addprefix build/, $(patsubst %.cpp, %.d, $(DEPS_CPP)))
 
 build/%.d: %.cpp build
-	@$(CC) -MM $< $(INCLUDES) > $@
+	@$(QCC) -MM $< $(INCLUDES) > $@
 
-# Include dependancy file for .h modifications
+build/Antialiasers/%.d: Antialiasers/%.cpp build/Antialiasers
+	@$(QCC) -MM $< $(INCLUDES) > $@
+
+build/Objects/%.d: Objects/%.cpp build/Objects
+	@$(QCC) -MM $< $(INCLUDES) > $@
+
+build/Lights/%.d: Lights/%.cpp build/Lights
+	@$(QCC) -MM $< $(INCLUDES) > $@
+
+build/Materials/%.d: Materials/%.cpp build/Materials
+	@$(QCC) -MM $< $(INCLUDES) > $@
+
+build/Xml/%.d: Xml/%.cpp build/Xml
+	@$(QCC) -MM $< $(INCLUDES) > $@
+
 -include $(DEPS)
 
-build/%.o: %.cpp
-	$(QUIET_CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 
-build/littleray: $(OBJS)
-	$(QUIET_CC) -o build/littleray $(OBJS) $(LDFLAGS)
+###########################
+##### Littleray build #####
+###########################
+
+FILES=$(wildcard *.cpp)
+OBJS=$(addprefix build/, $(patsubst %.cpp, %.o, $(FILES)))
+LIBS=$(addprefix build/lib, $(addsuffix .a, $(LIB_NAMES)))
+
+littleray: $(OBJS) $(LIBS)
+	$(QCC) -o build/littleray $(OBJS) $(LDFLAGS)
+
+build/%.o: %.cpp
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+
+
+############################
+##### Archive creation #####
+############################
+
+ANTIALIASERS_FILES=$(wildcard Antialiasers/*.cpp)
+ANTIALIASERS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(ANTIALIASERS_FILES)))
+build/libAntialiasers.a: $(ANTIALIASERS_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
+
+OBJECTS_FILES=$(wildcard Objects/*.cpp)
+OBJECTS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(OBJECTS_FILES)))
+build/libObjects.a: $(OBJECTS_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
+
+MATERIALS_FILES=$(wildcard Materials/*.cpp)
+MATERIALS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(MATERIALS_FILES)))
+build/libMaterials.a: $(MATERIALS_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
+
+XML_FILES=$(wildcard Xml/*.cpp)
+XML_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(XML_FILES)))
+build/libXml.a: $(XML_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
+
+LIGHTS_FILES=$(wildcard Lights/*.cpp)
+LIGHTS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(LIGHTS_FILES)))
+build/libLights.a: $(LIGHTS_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
+
+
+###################################
+##### Libraries objects build #####
+###################################
+
+build/Antialiasers/%.o: Antialiasers/%.cpp build/Antialiasers 
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+	
+build/Objects/%.o: Objects/%.cpp build/Objects
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+	
+build/Materials/%.o: Materials/%.cpp build/Materials
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+	
+build/Xml/%.o: Xml/%.cpp build/Xml
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+
+build/Lights/%.o: Lights/%.cpp build/Lights
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+
+
+
+########################################
+##### Build directories management #####
+########################################
+
+BUILD_DIRS=build $(addprefix build/, $(LIB_NAMES))
+
+$(BUILD_DIRS):
+	$(QMKDIR) -p $@
+
+
+#########################
+##### Clean targets #####
+#########################
 
 clean:
-	@echo "Cleaning build directory."
+	@echo "Removing build directory."
+	@echo -e "\tRM\t build/"
 	@rm -rf build/
-	@make -C xml/ clean
-	@make -C tests/ clean
-	
 
-.PHONY: clean coverage
+.PHONY: clean 
+
