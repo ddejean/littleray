@@ -1,5 +1,5 @@
 #include <cmath>
-#include "Vector.h"
+#include "Maths/Vector.h"
 #include "PhongProperty.h"
 
 PhongProperty::PhongProperty(double r, double g, double b, double p):

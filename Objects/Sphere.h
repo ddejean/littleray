@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <fstream>
-#include "Point.h"
-#include "Vector.h"
+#include "Maths/Point.h"
+#include "Maths/Vector.h"
 #include "Lights/Ray.h"
 #include "Materials/Material.h"
 #include "Objects/Object.h"

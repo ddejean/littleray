@@ -4,7 +4,7 @@
 #include "Pixel.h"
 #include "Lights/Ray.h"
 #include "Lights/Light.h"
-#include "Vector.h"
+#include "Maths/Vector.h"
 
 class MaterialProperty {
 protected:

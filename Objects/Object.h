@@ -2,7 +2,7 @@
 #define OBJECT_H_
 
 #include <assert.h>
-#include "Vector.h"
+#include "Maths/Vector.h"
 #include "Lights/Ray.h"
 #include "Materials/Material.h"
 

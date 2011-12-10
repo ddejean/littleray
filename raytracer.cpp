@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include "Point.h"
-#include "Vector.h"
 #include "Display.h"
 #include "Scene.h"
 #include "SceneFactory.h"

@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <assert.h>
 #include "Material.h"
-#include "Vector.h"
+#include "Maths/Vector.h"
 
 Material::Material(MaterialProperty *diff, MaterialProperty *spec, double refl):
 	specular(spec),

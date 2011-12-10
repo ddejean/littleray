@@ -1,7 +1,7 @@
 #ifndef _LIGHT_H_
 #define _LIGHT_H_
 
-#include "Point.h"
+#include "Maths/Point.h"
 #include <iostream>
 
 class Light {

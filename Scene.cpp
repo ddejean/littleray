@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <cmath>
 #include "Scene.h"
-#include "Point.h"
+#include "Maths/Point.h"
 #include "Lights/Light.h"
 #include "Lights/Ray.h"
 #include "Objects/Object.h"

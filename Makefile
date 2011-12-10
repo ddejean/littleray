@@ -2,10 +2,10 @@
 # Littleray build suite #
 #########################
 
-LIB_NAMES=Antialiasers Objects Lights Materials Xml
+LIB_NAMES=Antialiasers Objects Lights Materials Xml Maths
 LIB_DIRS=$(addprefix ./, $(LIB_NAMES))
 
-INCLUDES_DIRS=. $(LIB_NAMES)
+INCLUDES_DIRS=.
 INCLUDES=$(addprefix -I, $(INCLUDES_DIRS))
 
 
@@ -27,7 +27,6 @@ ARFLAGS=-cq
 
 # Main targets
 all: littleray
-	@echo $(LDFLAGS) 
 
 
 #######################################
@@ -54,6 +53,9 @@ build/Materials/%.d: Materials/%.cpp build/Materials
 	@$(QCC) -MM $< $(INCLUDES) > $@
 
 build/Xml/%.d: Xml/%.cpp build/Xml
+	@$(QCC) -MM $< $(INCLUDES) > $@
+
+build/Maths/%.d: Maths/%.cpp build/Maths
 	@$(QCC) -MM $< $(INCLUDES) > $@
 
 -include $(DEPS)
@@ -103,6 +105,11 @@ LIGHTS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(LIGHTS_FILES)))
 build/libLights.a: $(LIGHTS_OBJS)
 	$(QAR) $(ARFLAGS) $@ $^
 
+MATHS_FILES=$(wildcard Maths/*.cpp)
+MATHS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(MATHS_FILES)))
+build/libMaths.a: $(MATHS_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
+
 
 ###################################
 ##### Libraries objects build #####
@@ -123,6 +130,8 @@ build/Xml/%.o: Xml/%.cpp build/Xml
 build/Lights/%.o: Lights/%.cpp build/Lights
 	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
+build/Maths/%.o: Maths/%.cpp build/Maths
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
 
 ########################################

@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "Light.h"
-#include "Point.h"
 #include "LightFactory.h"
+#include "Maths/Point.h"
 #include "Xml/tinyxml.h"
 
 Light *LightFactory::makeLight(TiXmlNode *n)
