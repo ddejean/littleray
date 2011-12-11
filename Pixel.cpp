@@ -34,3 +34,4 @@ unsigned char Pixel::getBlueOnByte(void)
 {
 	return this->getColorToByte(this->blue);
 }
+

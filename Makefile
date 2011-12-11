@@ -4,6 +4,7 @@
 
 LIB_NAMES=Antialiasers Objects Lights Materials Xml Maths
 LIB_DIRS=$(addprefix ./, $(LIB_NAMES))
+LIBS=$(addprefix build/lib, $(addsuffix .a, $(LIB_NAMES)))
 
 INCLUDES_DIRS=.
 INCLUDES=$(addprefix -I, $(INCLUDES_DIRS))
@@ -13,10 +14,12 @@ INCLUDES=$(addprefix -I, $(INCLUDES_DIRS))
 CC=g++
 AR=ar
 MKDIR=mkdir
+CXXTESTGEN=tests/tools/cxxtestgen.pl
 
 QCC=@echo -e "\tCC\t " $@; $(CC)
 QMKDIR=@echo -e "\tMKDIR\t " $@; $(MKDIR)
 QAR=@echo -e "\tAR\t " $@; $(AR)
+QCXXTESTGEN=@echo -e "\tTESTGEN\t " $@; $(CXXTESTGEN)
 
 ### Options
 CFLAGS=-Wall -Wextra -Werror
@@ -26,7 +29,7 @@ ARFLAGS=-cq
 
 
 # Main targets
-all: littleray
+all: littleray test
 
 
 #######################################
@@ -38,25 +41,28 @@ DEPS_CPP=$(wildcard $(DEPS_WILDCARD))
 DEPS=$(addprefix build/, $(patsubst %.cpp, %.d, $(DEPS_CPP)))
 
 build/%.d: %.cpp build
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Antialiasers/%.d: Antialiasers/%.cpp build/Antialiasers
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Objects/%.d: Objects/%.cpp build/Objects
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Lights/%.d: Lights/%.cpp build/Lights
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Materials/%.d: Materials/%.cpp build/Materials
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Xml/%.d: Xml/%.cpp build/Xml
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Maths/%.d: Maths/%.cpp build/Maths
-	@$(QCC) -MM $< $(INCLUDES) > $@
+	@$(CC) -MM $< $(INCLUDES) > $@
+
+build/tests/%.d: tests/%.cpp build/tests
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 -include $(DEPS)
 
@@ -67,14 +73,37 @@ build/Maths/%.d: Maths/%.cpp build/Maths
 
 FILES=$(wildcard *.cpp)
 OBJS=$(addprefix build/, $(patsubst %.cpp, %.o, $(FILES)))
-LIBS=$(addprefix build/lib, $(addsuffix .a, $(LIB_NAMES)))
 
-littleray: $(OBJS) $(LIBS)
+littleray: build/littleray
+
+build/littleray: $(OBJS) $(LIBS)
 	$(QCC) -o build/littleray $(OBJS) $(LDFLAGS)
 
 build/%.o: %.cpp
 	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
+
+#################################
+##### Test chain management #####
+#################################
+
+test: INCLUDES+=-Itests/
+test: build/tests/runtests
+	@echo "Running tests suites ..."
+	@build/tests/runtests
+
+TEST_DIRS=tests
+TEST_FILES=tests/runtests.cpp $(filter-out tests/runtests.cpp, $(wildcard $(addsuffix /*.cpp, $(TEST_DIRS))))
+TEST_OBJS=$(addprefix build/, $(patsubst %.cpp, %.o, $(TEST_FILES)))
+
+build/tests/runtests: build/tests $(TEST_OBJS) $(LIBS)
+	$(QCC) -o $@ $(TEST_OBJS) $(LDFLAGS)
+
+build/tests/%.o: tests/%.cpp
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+
+tests/runtests.cpp: 
+	$(QCXXTESTGEN) -o tests/runtests.cpp --error-printer tests/*.h
 
 ############################
 ##### Archive creation #####
@@ -138,7 +167,7 @@ build/Maths/%.o: Maths/%.cpp build/Maths
 ##### Build directories management #####
 ########################################
 
-BUILD_DIRS=build $(addprefix build/, $(LIB_NAMES))
+BUILD_DIRS=build $(addprefix build/, $(TEST_DIRS)) $(addprefix build/, $(LIB_NAMES))
 
 $(BUILD_DIRS):
 	$(QMKDIR) -p $@
@@ -149,9 +178,11 @@ $(BUILD_DIRS):
 #########################
 
 clean:
-	@echo "Removing build directory."
+	@echo "Removing generated files."
 	@echo -e "\tRM\t build/"
 	@rm -rf build/
+	@echo -e "\tRM\t tests/runtests.cpp"
+	@rm -f tests/runtests.cpp
 
 .PHONY: clean 
 
