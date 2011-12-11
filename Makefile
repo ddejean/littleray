@@ -2,13 +2,16 @@
 # Littleray build suite #
 #########################
 
+### Makefile general parameters
+SHELL=/bin/bash
+
+### Parameters for a Makefile a little bit generic
 LIB_NAMES=Antialiasers Objects Lights Materials Xml Maths
 LIB_DIRS=$(addprefix ./, $(LIB_NAMES))
 LIBS=$(addprefix build/lib, $(addsuffix .a, $(LIB_NAMES)))
 
 INCLUDES_DIRS=.
 INCLUDES=$(addprefix -I, $(INCLUDES_DIRS))
-
 
 ### Tools
 CC=g++
@@ -28,7 +31,7 @@ LDFLAGS=-lSDL -Lbuild/ $(addprefix -l, $(LIB_NAMES))
 ARFLAGS=-cq
 
 
-# Main targets
+### Main targets
 all: littleray test
 
 
@@ -103,7 +106,7 @@ build/tests/%.o: tests/%.cpp
 	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
 tests/runtests.cpp: 
-	$(QCXXTESTGEN) -o tests/runtests.cpp --error-printer tests/*.h
+	$(QCXXTESTGEN) -o $@ --error-printer tests/*.h
 
 ############################
 ##### Archive creation #####
