@@ -32,7 +32,22 @@ ARFLAGS=-cq
 
 
 ### Main targets
+all: CFLAGS+=$(OPTFLAGS)
 all: littleray test
+
+coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
+coverage: LDFLAGS+=-lgcov
+coverage: littleray test build/coverage
+	lcov --directory build/ --zerocounter
+	build/littleray scene.xml
+	build/tests/runtests
+	lcov --base-directory "`pwd`/" --directory build/ --capture --output-file build/draft.info
+	lcov -r build/draft.info "*.h" \
+		 -r build/draft.info "*usr*include*" \
+		 -r build/draft.info "Xml/*" \
+		 -r build/draft.info "tests/cxxtest/*" \
+		 --output-file build/littleray.info
+	genhtml build/littleray.info --output-directory build/coverage/
 
 
 #######################################
@@ -170,7 +185,9 @@ build/Maths/%.o: Maths/%.cpp build/Maths
 ##### Build directories management #####
 ########################################
 
-BUILD_DIRS=build $(addprefix build/, $(TEST_DIRS)) $(addprefix build/, $(LIB_NAMES))
+BUILD_DIRS=build build/coverage \
+		   $(addprefix build/, $(TEST_DIRS)) \
+		   $(addprefix build/, $(LIB_NAMES))
 
 $(BUILD_DIRS):
 	$(QMKDIR) -p $@
