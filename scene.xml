@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<scene width="640" height="480" title="3 spheres" antialiaser="4x">
+<scene width="1024" height="768" title="3 spheres" antialiaser="4x">
 	<material reflection="0.5">
 	       <diffuse type="lambert" red="1.0" green="1.0" blue="0.0" />
 	       <specular type="blinn" red="1.0" green="1.0" blue="0.0" power="60" />
@@ -17,8 +17,8 @@
 	<light red="0.6" green="0.7" blue="1.0" x="640.0" y="240.0" z="-10000.0"/>
 	
 	<objects>
-		<sphere x="233.0" y="290.0" z="0.0" radius="100.0" material="0"/>
-		<sphere x="407.0" y="290.0" z="0.0" radius="100.0" material="1"/>
-		<sphere x="320.0" y="140.0" z="0.0" radius="100.0" material="2"/>
+		<sphere x="350.0" y="512.0" z="0.0" radius="200.0" material="0"/>
+		<sphere x="674.0" y="512.0" z="0.0" radius="200.0" material="1"/>
+		<sphere x="512.0" y="256.0" z="0.0" radius="200.0" material="2"/>
 	</objects>
 </scene>
