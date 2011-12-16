@@ -19,11 +19,9 @@ public:
 	double getZ(void);
 	bool isNull(void);
 	double norm(void);
-	Vector operator+(Vector &v);
 	Vector operator-(Vector v);
 	double operator*(Vector &v);
 	Vector operator*(double c);
-	friend std::istream &operator>>(std::istream &inputFile, Vector &v);
 
 };
 
