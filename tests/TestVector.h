@@ -16,6 +16,8 @@ public:
 	void testNorm(void);
 	void testMinusOperator(void);
 	void testScalarMultiplication(void);
+	void testVectorCreationFromPoints(void);
+	void testMultiplyAdd(void);
 };
 
 #endif /* TESTVECTOR_H_ */

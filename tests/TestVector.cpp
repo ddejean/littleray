@@ -75,3 +75,29 @@ void TestVector::testScalarMultiplication(void)
 	TS_ASSERT_EQUALS(b.getY(), coef);
 	TS_ASSERT_EQUALS(b.getZ(), coef);
 }
+
+void TestVector::testVectorCreationFromPoints(void)
+{
+	Point p1, p2;
+
+	p1 = Point(6.0, 4.0, 2.0);
+	p2 = Point(1.0, 2.0, 3.0);
+	a = p1 - p2;
+
+	TS_ASSERT_EQUALS(a.getX(), 5.0);
+	TS_ASSERT_EQUALS(a.getY(), 2.0);
+	TS_ASSERT_EQUALS(a.getZ(), -1.0);
+}
+
+void TestVector::testMultiplyAdd(void)
+{
+	double result;
+
+	a = Vector(1.0, 1.0, 1.0);
+	result = a * b;
+	TS_ASSERT_EQUALS(result, 0.0);
+
+	b = Vector(2.0, 2.0, 2.0);
+	result = a * b;
+	TS_ASSERT_EQUALS(result, 6.0);
+}
