@@ -11,6 +11,7 @@ private:
 public:
 	void setUp(void);
 
+	void testConstructors(void);
 	void testGetters(void);
 	void testIsNull(void);
 	void testNorm(void);

@@ -2,9 +2,18 @@
 
 void TestVector::setUp(void)
 {
-	a = Vector(0.0, 0.0, 0.0);
-	b = Vector(0.0, 0.0, 0.0);
-	c = Vector(0.0, 0.0, 0.0);
+	a = Vector();
+	b = Vector();
+	c = Vector();
+}
+
+void TestVector::testConstructors(void)
+{
+	a = Vector();
+	TS_ASSERT_EQUALS(0.0, a.getX());
+	TS_ASSERT_EQUALS(0.0, a.getY());
+	TS_ASSERT_EQUALS(0.0, a.getZ());
+	/* Test of Vector(double, double, double) is the same as testGetters */
 }
 
 void TestVector::testGetters(void)

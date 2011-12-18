@@ -47,7 +47,7 @@ Vector Sphere::normal(Ray &r, double t)
 
         /* Normalisation du vecteur n */
         norm = n.norm();
-        if (norm == 0.0f) return Vector(0.0f, 0.0f, 0.0f);
+        if (norm == 0.0f) return Vector();
         n = n * (1.0f /norm);
 
         return n;

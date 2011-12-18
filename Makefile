@@ -26,7 +26,7 @@ QCXXTESTGEN=@echo -e "\tTESTGEN\t " $@; $(CXXTESTGEN)
 
 ### Options
 CFLAGS=-Wall -Wextra -Werror
-OPTFLAGS=-O2
+OPTFLAGS=-O2 -mavx
 LDFLAGS=-lSDL -Lbuild/ $(addprefix -l, $(LIB_NAMES))
 ARFLAGS=-cq
 
@@ -34,6 +34,9 @@ ARFLAGS=-cq
 ### Main targets
 all: CFLAGS+=$(OPTFLAGS)
 all: littleray test
+
+avx: CFLAGS+=$(OPTFLAGS) -mavx -DAVX
+avx: littleray test
 
 coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
 coverage: LDFLAGS+=-lgcov
