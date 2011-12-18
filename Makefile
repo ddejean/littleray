@@ -26,7 +26,7 @@ QCXXTESTGEN=@echo -e "\tTESTGEN\t " $@; $(CXXTESTGEN)
 
 ### Options
 CFLAGS=-Wall -Wextra -Werror
-OPTFLAGS=-O2 -mavx
+OPTFLAGS=-Ofast
 LDFLAGS=-lSDL -Lbuild/ $(addprefix -l, $(LIB_NAMES))
 ARFLAGS=-cq
 
@@ -52,7 +52,13 @@ coverage: littleray test build/coverage
 		 --output-file build/littleray.info
 	genhtml build/littleray.info --output-directory build/coverage/
 
-
+profiling: CFLAGS+=-pg
+profiling: LDFLAGS+=-pg
+profiling: littleray build/profiling
+	build/littleray scene.xml
+	mv gmon.out build/profiling
+	cd build/profiling; gprof ../littleray > profile.txt
+	
 #######################################
 ##### Dependency files management #####
 #######################################
@@ -188,7 +194,7 @@ build/Maths/%.o: Maths/%.cpp build/Maths
 ##### Build directories management #####
 ########################################
 
-BUILD_DIRS=build build/coverage \
+BUILD_DIRS=build build/coverage build/profiling \
 		   $(addprefix build/, $(TEST_DIRS)) \
 		   $(addprefix build/, $(LIB_NAMES))
 
