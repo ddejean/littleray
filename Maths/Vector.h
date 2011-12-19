@@ -11,21 +11,10 @@ private:
 		X = 0,
 		Y = 1,
 		Z = 2,
-#if defined(AVX)
-		PAD = 3,
-#endif
 		MAX
 	};
 
-#if defined(AVX)
-	typedef double v4df __attribute__ ((__vector_size__(32)));
-	union dtable {
-		double t[MAX];	/* Coords table */
-		v4df v;   /* Coords SIMD vector */
-	} coords;
-#else
 	double coords[MAX];
-#endif
 
 public:
 	Vector(void);

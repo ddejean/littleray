@@ -35,9 +35,6 @@ ARFLAGS=-cq
 all: CFLAGS+=$(OPTFLAGS)
 all: littleray test
 
-avx: CFLAGS+=$(OPTFLAGS) -mavx -DAVX
-avx: littleray test
-
 coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
 coverage: LDFLAGS+=-lgcov
 coverage: littleray test build/coverage
