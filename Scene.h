@@ -5,7 +5,7 @@
 #include "Objects/Object.h"
 #include "Materials/Material.h"
 #include "Lights/Light.h"
-#include "Display.h"
+#include "Displays/Display.h"
 #include "Pixel.h"
 #include "Antialiasers/Antialiaser.h"
 

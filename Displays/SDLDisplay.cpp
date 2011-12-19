@@ -1,9 +1,9 @@
-#include "Display.h"
+#include "SDLDisplay.h"
 #include "Scene.h"
 #include <assert.h>
 #include <SDL/SDL.h>
 
-Display::Display(Scene *s)
+SDLDisplay::SDLDisplay(Scene *s)
 {
 	assert(s != NULL);
 
@@ -17,13 +17,13 @@ Display::Display(Scene *s)
 	SDL_WM_SetCaption(s->title.c_str(), NULL);
 }
 
-Display::~Display(void)
+SDLDisplay::~SDLDisplay(void)
 {
 	assert(this->screen != NULL);
 	SDL_Quit();
 }
 
-void Display::writePixel(int x, int y, Pixel *pixel)
+void SDLDisplay::writePixel(int x, int y, Pixel *pixel)
 {
 	uint32_t color;
 	uint32_t *pixels;
@@ -39,17 +39,19 @@ void Display::writePixel(int x, int y, Pixel *pixel)
 	pixels[this->screen->w * y + x] = color;
 }
 
-void Display::refresh(void)
-{
-	assert(this->screen != NULL);
-	SDL_Flip(this->screen);
-}
-
-void Display::waitForQuit(void)
+void SDLDisplay::waitForQuit(void)
 {
 	SDL_Event event;
 
 	while (event.type != SDL_QUIT)
 		SDL_WaitEvent(&event);
 }
+
+void SDLDisplay::refresh(void)
+{
+	assert(this->screen != NULL);
+	SDL_Flip(this->screen);
+	waitForQuit();
+}
+
 

@@ -1,14 +1,15 @@
 #include <iostream>
 #include <sys/time.h>
 
-#include "Display.h"
+#include "Displays/Display.h"
+#include "Displays/SDLDisplay.h"
 #include "Scene.h"
 #include "SceneFactory.h"
+#include "Displays/DisplayFactory.h"
 
 int main(int argc, char **argv)
 {
         Display *display;
-        SceneFactory *sceneFactory;
         Scene *scene;
         /* Time evaluation */
         struct timeval before, after;
@@ -20,10 +21,10 @@ int main(int argc, char **argv)
                 std::cout << "Error in program parameters." << std::endl;
                 return EXIT_FAILURE;
         } else {
-                sceneFactory = new SceneFactory();
-                scene = sceneFactory->makeScene(argv[1]);
-                display = new Display(scene);
-                delete sceneFactory;
+        		DisplayFactory displayFactory;
+                SceneFactory sceneFactory;
+                scene = sceneFactory.makeScene(argv[1]);
+                display = displayFactory.makeDisplay(scene);
         }
 
         /* Render the picture */
@@ -38,9 +39,8 @@ int main(int argc, char **argv)
         		  << " ms.\n"
         		  << std::endl;
 
-        /* Display */
+        /* Display, this call may block */
         display->refresh();
-        display->waitForQuit();
 
         /* Free memory */
         delete display;

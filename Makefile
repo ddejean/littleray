@@ -6,7 +6,7 @@
 SHELL=/bin/bash
 
 ### Parameters for a Makefile a little bit generic
-LIB_NAMES=Antialiasers Objects Lights Materials Xml Maths
+LIB_NAMES=Antialiasers Objects Lights Materials Xml Maths Displays
 LIB_DIRS=$(addprefix ./, $(LIB_NAMES))
 LIBS=$(addprefix build/lib, $(addsuffix .a, $(LIB_NAMES)))
 
@@ -87,6 +87,9 @@ build/Xml/%.d: Xml/%.cpp build/Xml
 
 build/Maths/%.d: Maths/%.cpp build/Maths
 	@$(CC) -MM $< $(INCLUDES) > $@
+	
+build/Displays/%.d: Displays/%.cpp build/Displays
+	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/tests/%.d: tests/%.cpp build/tests
 	@$(CC) -MM $< $(INCLUDES) > $@
@@ -166,6 +169,10 @@ MATHS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(MATHS_FILES)))
 build/libMaths.a: $(MATHS_OBJS)
 	$(QAR) $(ARFLAGS) $@ $^
 
+DISPLAYS_FILES=$(wildcard Displays/*.cpp)
+DISPLAYS_OBJS=$(patsubst %.cpp, %.o, $(addprefix build/, $(DISPLAYS_FILES)))
+build/libDisplays.a: $(DISPLAYS_OBJS)
+	$(QAR) $(ARFLAGS) $@ $^
 
 ###################################
 ##### Libraries objects build #####
@@ -187,6 +194,9 @@ build/Lights/%.o: Lights/%.cpp build/Lights
 	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
 build/Maths/%.o: Maths/%.cpp build/Maths
+	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
+	
+build/Displays/%.o: Displays/%.cpp build/Displays
 	$(QCC) -c $< -o $@ $(CFLAGS) $(INCLUDES)
 
 
