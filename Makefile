@@ -64,7 +64,7 @@ DEPS_WILDCARD=*.cpp  $(addsuffix /*.cpp, $(LIB_NAMES))
 DEPS_CPP=$(wildcard $(DEPS_WILDCARD))
 DEPS=$(addprefix build/, $(patsubst %.cpp, %.d, $(DEPS_CPP)))
 
-build/%.d: %.cpp build
+build/%.d: %.cpp build $(addprefix build/, $(LIB_NAMES))
 	@$(CC) -MM $< $(INCLUDES) > $@
 
 build/Antialiasers/%.d: Antialiasers/%.cpp build/Antialiasers
