@@ -10,9 +10,13 @@ int main(int argc, char **argv)
 		ContextFactory cF;
 
 		context = cF.makeContext(argc, argv);
-		context->render();
-		context->refresh();
-		delete context;
+
+		if (context != 0) {
+			/* Parsing successful */
+			context->render();
+			context->refresh();
+			delete context;
+		}
 
         return 0;
 }
