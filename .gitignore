@@ -2,4 +2,5 @@
 .project
 build
 tests/runtests.cpp
+*~
 
