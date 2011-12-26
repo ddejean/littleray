@@ -11,6 +11,7 @@ private:
 
 public:
 	Context(Scene *s, Display *d);
+	~Context(void);
 	void render(void);
 	void refresh(void);
 };

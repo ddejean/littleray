@@ -11,6 +11,14 @@ Context::Context(Scene *s, Display *d)
 	this->display = d;
 }
 
+Context::~Context(void)
+{
+	if (this->scene)
+		delete this->scene;
+	if (this->display)
+		delete this->display;
+}
+
 void Context::render(void)
 {
     /* Time evaluation */

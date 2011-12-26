@@ -10,7 +10,6 @@ public:
 
 	Pixel();
 	Pixel(double r, double g, double b);
-	unsigned char getRed(void);
 	unsigned char getRedOnByte(void);
 	unsigned char getGreenOnByte(void);
 	unsigned char getBlueOnByte(void);

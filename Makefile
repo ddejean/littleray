@@ -39,7 +39,7 @@ coverage: CFLAGS+=-fprofile-arcs -ftest-coverage
 coverage: LDFLAGS+=-lgcov
 coverage: littleray test build/coverage
 	lcov --directory build/ --zerocounter
-	build/littleray scene.xml
+	build/littleray --scene scene.xml --display none
 	build/tests/runtests
 	lcov --base-directory "`pwd`/" --directory build/ --capture --output-file build/draft.info
 	lcov -r build/draft.info "*.h" \
@@ -52,7 +52,7 @@ coverage: littleray test build/coverage
 profiling: CFLAGS+=-pg
 profiling: LDFLAGS+=-pg
 profiling: littleray build/profiling
-	build/littleray scene.xml
+	build/littleray --scene scene.xml --display none
 	mv gmon.out build/profiling
 	cd build/profiling; gprof ../littleray > profile.txt
 	
@@ -120,7 +120,7 @@ test: build/tests/runtests
 	@build/tests/runtests
 
 TEST_DIRS=tests
-TEST_FILES=tests/runtests.cpp $(filter-out tests/runtests.cpp, $(wildcard $(addsuffix /*.cpp, $(TEST_DIRS))))
+TEST_FILES=Pixel.cpp tests/runtests.cpp $(filter-out tests/runtests.cpp, $(wildcard $(addsuffix /*.cpp, $(TEST_DIRS))))
 TEST_OBJS=$(addprefix build/, $(patsubst %.cpp, %.o, $(TEST_FILES)))
 
 build/tests/runtests: build/tests $(TEST_OBJS) $(LIBS)
