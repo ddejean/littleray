@@ -41,6 +41,7 @@ coverage: littleray test build/coverage
 	lcov --directory build/ --zerocounter
 	build/littleray --scene scene.xml --display none
 	build/tests/runtests
+	tests/scripted/main.sh
 	lcov --base-directory "`pwd`/" --directory build/ --capture --output-file build/draft.info
 	lcov -r build/draft.info "*.h" \
 		 -r build/draft.info "*usr*include*" \
@@ -116,8 +117,10 @@ build/%.o: %.cpp
 
 test: INCLUDES+=-Itests/
 test: build/tests/runtests
-	@echo "Running tests suites ..."
+	@echo "Running unit tests suite ..."
 	@build/tests/runtests
+	@echo "Running scripted tests suite ..."
+	@tests/scripted/main.sh
 
 TEST_DIRS=tests
 TEST_FILES=Pixel.cpp tests/runtests.cpp $(filter-out tests/runtests.cpp, $(wildcard $(addsuffix /*.cpp, $(TEST_DIRS))))
