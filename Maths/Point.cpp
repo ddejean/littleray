@@ -23,3 +23,9 @@ Point Point::operator+(Vector v)
 	 return p;
 }
 
+bool Point::operator ==(const Point &p)
+{
+	return ((this->x == p.x)
+		 && (this->y == p.y)
+		 && (this->z == p.z));
+}
