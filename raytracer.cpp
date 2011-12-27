@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdlib>
 #include <sys/time.h>
 
 #include "Context.h"
@@ -9,7 +10,12 @@ int main(int argc, char **argv)
 		Context *context;
 		ContextFactory cF;
 
+		try {
 		context = cF.makeContext(argc, argv);
+		} catch (...) {
+			std::cout << "An error occurred during raytracer context creation, aborting." << std::endl;
+			return EXIT_FAILURE;
+		}
 
 		if (context != 0) {
 			/* Parsing successful */
@@ -18,6 +24,6 @@ int main(int argc, char **argv)
 			delete context;
 		}
 
-        return 0;
+        return EXIT_SUCCESS;
 }
 

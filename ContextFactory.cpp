@@ -10,7 +10,8 @@ static struct option long_options[] =
 {
 		{"display", 1, 0, 'd'},
 		{"scene", 1, 0, 's'},
-		{"help", 0, 0, 'h'}
+		{"help", 0, 0, 'h'},
+		{NULL, 0, 0, 0}
 };
 
 void ContextFactory::help(void)
