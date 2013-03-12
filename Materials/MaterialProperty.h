@@ -14,6 +14,7 @@ protected:
 
 public:
 	MaterialProperty(double r, double g, double b): red(r), green(g), blue(b) {};
+	virtual ~MaterialProperty(){};
 
 	/*
 	 * Apply light contribution from material, light and view ray to
