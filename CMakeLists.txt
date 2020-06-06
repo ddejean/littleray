@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.10)
 
 project(littleray)
 
-# SDL dependency
-find_path(SDL_INCLUDE_DIR NAMES SDL/SDL.h)
-find_library(SDL_LIBRARY NAMES SDL)
+# SDL2 dependency
+find_path(SDL2_INCLUDE_DIR NAMES SDL2/SDL.h)
+find_library(SDL2_LIBRARY NAMES SDL2)
 
 # Main executable
 add_executable(littleray raytracer.cpp
@@ -39,6 +39,6 @@ add_executable(littleray raytracer.cpp
     Lights/Light.cpp
     Lights/Ray.cpp)
 
-target_include_directories(littleray PUBLIC ${PROJECT_SOURCE_DIR} ${SDL_INCLUDE_DIR})
-target_link_libraries(littleray ${SDL_LIBRARY})
+target_include_directories(littleray PUBLIC ${PROJECT_SOURCE_DIR} ${SDL2_INCLUDE_DIR})
+target_link_libraries(littleray ${SDL2_LIBRARY})
 

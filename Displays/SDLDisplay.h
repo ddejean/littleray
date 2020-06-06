@@ -1,12 +1,18 @@
 #ifndef _SDLDISPLAY_H_
 #define _SDLDISPLAY_H_
 
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #include "Display.h"
 
 class SDLDisplay: public Display {
         private:
-                SDL_Surface *screen;
+                int width;
+                int height;
+                SDL_Window *screen;
+                SDL_Renderer *renderer;
+                SDL_Texture *texture;
+                SDL_PixelFormat *format;
+                uint32_t *pixels;
                 void waitForQuit(void);
         public:
                 SDLDisplay(Scene *s);
