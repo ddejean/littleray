@@ -1,5 +1,5 @@
 #ifndef PHONGMATERIAL_H_
-#define PHONGPROPERTY_H_
+#define PHONGMATERIAL_H_
 
 #include "MaterialProperty.h"
 
@@ -21,4 +21,4 @@ public:
 			   Vector &normal);
 };
 
-#endif /* PHONGPROPERTY_H_ */
+#endif /* PHONGMATERIAL_H_ */
